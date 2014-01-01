@@ -14,13 +14,14 @@ class CommandValidation(inputValidation: InputValidation) {
     else Right(results.head.right.get)
   }
 
-  def isValid(command:Command) = {
+  def isValid(command:Command) : Either[String, Command] = {
     command match {
       case cmd@Quit() => Right(cmd)
       case cmd@NewCanvas(_,_) => validateNewCanvas(cmd)
       case cmd@DrawLine(_,_)  => validateDrawLine(cmd)
       case cmd@ApplyFill(_,_)  => validateApplyFill(cmd)
       case cmd@DrawRectangle(_,_)  => validateRectangle(cmd)
+      case _ => Left(s"unrecognised command $command")
     }
   }
   
@@ -41,10 +42,10 @@ class CommandValidation(inputValidation: InputValidation) {
     def validDirection(line: DrawLine) = if(isHorizontal(line) || isVertical(line)) Right(line) else Left("lines must be drawn either vertically or horizontally")
     def isNotNegative(line: DrawLine) = {
       validateParameters(
-        notNegative(topLeft.x, "top left x"),
-        notNegative(topLeft.y, "top left y"),
-        notNegative(bottomRight.x, "bottom right x"),
-        notNegative(bottomRight.y, "bottom right y")) {
+        greaterThanZero(topLeft.x, "top left x"),
+        greaterThanZero(topLeft.y, "top left y"),
+        greaterThanZero(bottomRight.x, "bottom right x"),
+        greaterThanZero(bottomRight.y, "bottom right y")) {
         params => line
       }
     }
@@ -56,7 +57,11 @@ class CommandValidation(inputValidation: InputValidation) {
     )
   }
 
-  private def validateApplyFill(fill: ApplyFill) = ???
+  private def validateApplyFill(fill: ApplyFill) : Either[String, Command] = {
+    Right(fill)
+  }
 
-  private def validateRectangle(rectangle: DrawRectangle) = ???
+  private def validateRectangle(rectangle: DrawRectangle) : Either[String, Command] = {
+    Right(rectangle)
+  }
 }

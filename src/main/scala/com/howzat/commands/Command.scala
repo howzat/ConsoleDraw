@@ -3,7 +3,7 @@ package com.howzat.draw.commands
 import com.howzat.draw._
 import com.howzat.draw.model.Position
 
-sealed trait Command
+trait Command
 case class Quit() extends Command
 case class NewCanvas(width:Int, height:Int) extends Command
 case class ApplyFill(position:Position, colour:String) extends Command
