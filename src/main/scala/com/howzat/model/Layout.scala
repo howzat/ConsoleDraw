@@ -7,5 +7,8 @@ trait Layout {
 
 object BasicLayout extends Layout {
 
-  def placeElement(e: Element, canvas: Canvas) = ???
+  def placeElement(e: Element, canvas: Canvas) = {
+
+    Right(canvas)
+  }
 }
