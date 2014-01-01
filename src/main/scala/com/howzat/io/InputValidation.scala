@@ -14,9 +14,13 @@ class InputValidation {
     results filter (_.isLeft) map (_.left.get) mkString (", ")
   }
 
-  def notZero(value:Int, param:String) : Either[String, Int] = {
-    if(value >0) Right(value) else Left(s"param '$param' cannot be zero")
+  def greaterThanZero(value:Int, param:String) : Either[String, Int] = {
+    if(value >0) Right(value) else Left(s"param '$param' must be greater than zero")
   }
+
+  def notNegative(value:Int, param:String) : Either[String, Int] = {
+      if(value >=0) Right(value) else Left(s"param '$param' cannot be a negative number")
+    }
 
   def nonEmptyString(value: String, param: String): Either[String, String] = {
     if(!value.trim.isEmpty) Right(value) else Left(s"the value for '$param' [$value] must not be an empty string")

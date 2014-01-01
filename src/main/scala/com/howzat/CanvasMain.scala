@@ -1,6 +1,6 @@
 package com.howzat.draw
 
-import com.howzat.draw.commands.Command
+import com.howzat.draw.commands.{CommandValidation, Command}
 import com.howzat.io.{InputValidation, InputParser}
 
 
@@ -9,6 +9,7 @@ object CanvasMain extends App {
   def prompt() = print("Enter command:" )
 
   val parser   = new InputParser(new InputValidation)
+  val valida   = new CommandValidation(new InputValidation)
   var canvas   = None
 
   prompt()
@@ -21,7 +22,7 @@ object CanvasMain extends App {
   def execute(cmd:Either[String, Command], state:Option[Canvas]) = {
     cmd match {
       case Left(errors) => output(errors)
-      case Right(cmd)   => output(cmd toString)
+      case Right(c)   => valida.isValid(c)
     }
   }
 
