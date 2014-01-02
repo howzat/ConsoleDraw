@@ -1,7 +1,7 @@
 package com.howzat.draw
 
 import com.howzat.draw.commands._
-import com.howzat.io.{Printer, InputValidation, InputParser}
+import com.howzat.io.{BorderedPrinter, InputValidation, InputParser}
 import com.howzat.model._
 import com.howzat.draw.commands.DrawLine
 import com.howzat.draw.commands.DrawRectangle

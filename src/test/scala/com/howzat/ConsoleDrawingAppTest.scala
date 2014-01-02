@@ -11,11 +11,9 @@ import com.howzat.model.Canvas
 @RunWith(classOf[JUnitRunner])
 class ConsoleDrawingAppTest extends FreeSpec with ShouldMatchers {
 
+  val app = new ConsoleDrawingApp(" ")
 
   "Console Drawing app" - {
-
-    val app = new ConsoleDrawingApp
-
     "prints a warning message when given an unrecognised command" in {
       case class Bar() extends Command
       app enterCommand( Bar() ) should be ("Bar() is and unrecognised command")
@@ -27,15 +25,12 @@ class ConsoleDrawingAppTest extends FreeSpec with ShouldMatchers {
 
     "prints an empty canvas when one is created" in {
       val output =
-        """
-          ^--------------------
-          ^|                  |
-          ^|                  |
-          ^|                  |
-          ^|                  |
-          ^|                  |
-          ^--------------------
-        """.stripMargin('^')
+        """^----------------------
+           ^|                    |
+           ^|                    |
+           ^|                    |
+           ^|                    |
+           ^----------------------""".stripMargin('^')
 
       app enterCommand( NewCanvas(20, 4) ) should be (output)
     }

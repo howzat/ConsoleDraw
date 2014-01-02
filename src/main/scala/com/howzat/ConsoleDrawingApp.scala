@@ -1,7 +1,7 @@
 package com.howzat
 
 import com.howzat.draw.commands._
-import com.howzat.io.{Printer, InputParser, InputValidation}
+import com.howzat.io.{BorderedPrinter, InputParser, InputValidation}
 import com.howzat.model._
 import scala.Some
 import scala.Some
@@ -22,15 +22,16 @@ import com.howzat.draw.commands.DrawRectangle
 import java.io.{OutputStream, InputStream}
 import scala.io.{BufferedSource, Source}
 
-class ConsoleDrawingApp() {
+class ConsoleDrawingApp(emptySpaceChar:String=" ") {
 
   private val validation     = new CommandValidation(new InputValidation)
   private val parser         = new InputParser(new InputValidation)
   private var drawingSession = new DrawingSession(Layout.default)
+  private var printer        = BorderedPrinter(emptySpaceChar)
 
   def enterCommand(command: Command): String = {
     execute(command) match {
-      case Right(canvas) => Printer printCanvas canvas
+      case Right(canvas) => printer printCanvas canvas
       case Left(errorString) => errorString
     }
   }

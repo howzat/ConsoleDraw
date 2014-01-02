@@ -12,8 +12,8 @@ import com.howzat.draw.model.Position
 class CanvasTest extends FreeSpec with ShouldMatchers {
 
   private val rectangle: Rectangle = Rectangle(Position(20, 20), Position(20, 20))
-  private val line: Line = Line(Position(20, 20), Position(20, 20))
-  private val fill: FillPoint = FillPoint(Position(20, 20), "x")
+  private val line     : Line      = Line(Position(20, 20), Position(20, 20))
+  private val fill     : FillPoint = FillPoint(Position(30, 20), "x")
 
   "Canvas of heigth 100 and width 100" - {
 
@@ -45,10 +45,16 @@ class CanvasTest extends FreeSpec with ShouldMatchers {
     }
   }
 
+
   "Can turn a canvas into an element grid" - {
 
     "2 x 2 grid" in {
-//       Canvas(2,2) toElementGrid should be( List( List( VBorder() )))
+      Canvas(2, 2).toElementGrid should be(
+        List(
+              List(Empty(Position(0, 0)), Empty(Position(1, 0))),
+              List(Empty(Position(0, 1)), Empty(Position(1, 1)))
+            )
+      )
     }
   }
 }

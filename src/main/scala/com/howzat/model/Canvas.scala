@@ -2,38 +2,48 @@ package com.howzat.model
 
 import com.howzat.draw.model.Position
 import scala.collection.immutable.IndexedSeq
+import scala.annotation.tailrec
 
-case class Canvas(width:Int, height:Int, elements:Vector[Element]=Vector.empty) {
-
+case class Canvas(width: Int, height: Int, elements: Vector[Element] = Vector.empty) {
+  
   val CanvasTopLeft: Position = Position(0, 0)
-
-
-  def +(e:Element) = {
+  
+  
+  def +(e: Element) = {
     copy(elements = e +: elements)
   }
-
-  private def emptyGrid(): List[List[Option[Element]]] = {
-
-    val pixelGrid =  List.fill(width, height) (None)
-
-    for {
-      x <- 0 to width by 1
-      y <- 0 to height by 1
-      position = Position(x,y)
-    } yield {
-      if(position == CanvasTopLeft) Some(VBorder(position))
-      else if (position.x == 0 || position.x == bottomRight.x ) Some(VBorder(position))
-      else if (position.y == 0 || position.y == bottomRight.y ) Some(HBorder(position))
-      else None
+  private def emptyGrid: List[List[Element]] = {
+    List.tabulate(height) {
+      y => List.tabulate(width) {
+        x => Empty(Position(x, y))
+      }
     }
-
-    pixelGrid
   }
 
-  def toElementGrid : List[List[Option[Element]]] = {
-    emptyGrid()
-  }
-
+  def toElementGrid: List[List[Element]] = emptyGrid
   def topLeft = CanvasTopLeft
   def bottomRight = Position(width-1, height-1)
 }
+
+
+/*
+
+
+val BorderValue: Int = 2
+  val width = horizontalSpace + BorderValue
+  val height = verticalSpace + BorderValue
+  def hasLeftBorderAt(pos:Position) = (!isVerticalBorder(pos) && pos.x == 0)
+  def hasRighBorder(pos:Position)  = (!isVerticalBorder(pos) && pos.x == width)
+  
+  private def isTopBorder(pos:Position) = (pos.y == 0 && pos.x >=0 && pos.x < width)
+  private def isBottomBorder(pos:Position)  = (pos.y == height && pos.x >=0 && pos.x < width)
+  def isVerticalBorder(pos:Position) = (isTopBorder(pos) || isBottomBorder(pos))
+  /*
+  List(
+      List(VBorder(Position(0,0)), VBorder(Position(0,1)), VBorder(Position(0,2)), VBorder(Position(0,3))), 
+      List(HBorder(Position(1,0)), Empty(Position(1,1)), Empty(Position(1,2)), Empty(Position(1,3))), 
+      List(HBorder(Position(2,0)), Empty(Position(2,1)), Empty(Position(2,2)), Empty(Position(2,3))),
+      List(HBorder(Position(3,0)), Empty(Position(3,1)), Empty(Position(3,2)), Empty(Position(3,3)))
+  )
+   */
+ */
