@@ -9,9 +9,10 @@ import com.howzat.draw.model.Position
 @RunWith(classOf[JUnitRunner])
 class ElementTest extends FreeSpec with ShouldMatchers {
 
-  val rectangle = Rectangle(Position(20, 20), Position(40, 80))
-  val fill      = FillPoint(Position(30, 30), "c")
-  val line      = Line(Position(40, 40), Position(40, 90))
+  val rectangle      = Rectangle(Position(20, 20), Position(40, 80))
+  val fill           = FillPoint(Position(30, 30), "c")
+  val horizontalLine = Line(Position(40, 40), Position(40, 90))
+  val verticalLine   = Line(Position(40, 40), Position(90, 40))
 
 
   s"$rectangle" - {
@@ -30,19 +31,35 @@ class ElementTest extends FreeSpec with ShouldMatchers {
     }
   }
 
-  s"$line" - {
+  s"$horizontalLine" - {
 
     "should have height 1" in {
-      line.height should be(1)
+      horizontalLine.height should be(50)
     }
 
     "should have width 1" in {
-      line.width should be(1)
+      horizontalLine.width should be(1)
     }
 
     "should have position" in {
-      line.topLeft should be(line.topLeft)
-      line.bottomRight should be(line.bottomRight)
+      horizontalLine.topLeft should be(horizontalLine.topLeft)
+      horizontalLine.bottomRight should be(horizontalLine.bottomRight)
+    }
+  }
+
+  s"$verticalLine" - {
+
+    "should have height 1" in {
+      verticalLine.height should be(1)
+    }
+
+    "should have width 1" in {
+      verticalLine.width should be(50)
+    }
+
+    "should have position" in {
+      verticalLine.topLeft should be(verticalLine.topLeft)
+      verticalLine.bottomRight should be(verticalLine.bottomRight)
     }
   }
 
@@ -57,9 +74,8 @@ class ElementTest extends FreeSpec with ShouldMatchers {
     }
 
     "should have position" in {
-      fill.position should be(fill.position)
-      fill.topLeft should be(fill.position)
-      fill.bottomRight should be(fill.position)
+      fill.topLeft should be(fill.bottomRight)
+      fill.bottomRight should be(fill.topLeft)
     }
   }
 
