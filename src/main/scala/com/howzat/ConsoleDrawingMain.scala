@@ -46,9 +46,9 @@ object ConsoleDrawingMain extends App {
       case _ => toElement(command) map (drawingSession placeElement (_)) map {
         _ match {
           case Right(updated) => Printer print updated
-          case Left(errors) => errors
+          case Left(errors) => s"Oops: $errors"
         }
-      }
+      } get
     }
   }
 
