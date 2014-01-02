@@ -1,7 +1,7 @@
 package com.howzat.draw
 
 import com.howzat.draw.commands._
-import com.howzat.io.{InputValidation, InputParser}
+import com.howzat.io.{Printer, InputValidation, InputParser}
 import com.howzat.model._
 import com.howzat.draw.commands.DrawLine
 import com.howzat.draw.commands.DrawRectangle
@@ -35,17 +35,20 @@ object ConsoleDrawingMain extends App {
   private def runInputCommand(input: Result) {
     validate(input) match {
       case Left(error) => output(error)
-      case Right(cmnd) =>
-        output(execute(cmnd))
-        prompt()
+      case Right(cmnd) => output(execute(cmnd))
     }
   }
 
-  private def execute(command: Command) {
+  private def execute(command: Command) = {
     command match {
       case Quit() => System.exit(0)
       case NewCanvas(w, h) => drawingSession newCanvas(w, h)
-      case _ => toElement(command) map (drawingSession placeElement (_)) map (output(_))
+      case _ => toElement(command) map (drawingSession placeElement (_)) map {
+        _ match {
+          case Right(updated) => Printer print updated
+          case Left(errors) => errors
+        }
+      }
     }
   }
 
