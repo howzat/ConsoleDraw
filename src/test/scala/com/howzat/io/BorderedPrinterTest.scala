@@ -11,15 +11,16 @@ import com.howzat.draw.model.Position
 class BorderedPrinterTest extends FreeSpec with ShouldMatchers  {
 
   val printer = BorderedPrinter()
+  val emptyRow = List(HBorder(Position(0,1)), Empty(Position(1,1)), Empty(Position(2,1)), HBorder(Position(3,1)))
 
   "Canvas Printer " - {
 
     "renders an empty row " in {
-      printer renderRow (makeEmptyRow(2)) should be ("|oo|")
+      printer renderRow (emptyRow) should be ("|oo|")
     }
 
     "renders multiple empty rows " in {
-      val row: List[Element] = makeEmptyRow(2)
+      val row: List[Element] = emptyRow
       printer renderRows(List(row, row), "") should be ("|oo|\n|oo|")
     }
 
@@ -37,7 +38,5 @@ class BorderedPrinterTest extends FreeSpec with ShouldMatchers  {
     }
   }
 
-  def makeEmptyRow(size:Int): List[Element] = {
-    List.tabulate(size)(xPos => Empty(Position(xPos + 1, 1)))
-  }
+
 }

@@ -6,7 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.howzat.draw.commands.{NewCanvas, ApplyFill, DrawLine, Command}
 import com.howzat.draw.model.Position
-import com.howzat.model.Canvas
+import com.howzat.model.{Line, Canvas}
 
 @RunWith(classOf[JUnitRunner])
 class ConsoleDrawingAppTest extends FreeSpec with ShouldMatchers {
@@ -33,6 +33,18 @@ class ConsoleDrawingAppTest extends FreeSpec with ShouldMatchers {
            ^----------------------""".stripMargin('^')
 
       app enterCommand( NewCanvas(20, 4) ) should be (output)
+    }
+
+    "prints a line on the canvas" ignore {
+      val output =
+        """^----------------------
+           ^|                    |
+           ^|xxxxxx              |
+           ^|                    |
+           ^|                    |
+           ^----------------------""".stripMargin('^')
+
+      app enterCommand( DrawLine(Position(1,2), Position(6,2)) ) should be (output)
     }
 
 

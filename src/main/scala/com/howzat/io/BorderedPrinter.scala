@@ -20,9 +20,7 @@ case class BorderedPrinter(emptyChar:String="o") {
   def addBorder(i: Int, i1: Int, elements: List[List[Element]]) = elements
 
   def printCanvas(canvas: Canvas): String = {
-    val body = renderRows(canvas toElementGrid)
-    val verticalBorder = renderVerticalBorder(canvas.width + border)
-    s"$verticalBorder\n${body}\n$verticalBorder"
+    renderRows(canvas toElementGrid)
   }
 
   def renderRows(rows: List[List[Element]], rendered:String="") :String = {
@@ -31,12 +29,14 @@ case class BorderedPrinter(emptyChar:String="o") {
   }
 
   def renderRow(elems: List[Element], rendered:String="") : String = elems match {
-    case Nil => "|"+rendered+"|"
+    case Nil => rendered
     case head :: tail =>
       head match {
-        case Empty(_) => renderRow(tail, rendered + emptyChar)
+        case HBorder(_) => renderRow(tail, rendered + "|")
+        case VBorder(_) => renderRow(tail, rendered + "-")
         case Line(_, _) => renderRow(tail, rendered + "*")
         case Rectangle(_, _) => renderRow(tail, rendered + "*")
+        case Empty(_) => renderRow(tail, rendered + emptyChar)
         case FillPoint(_, colour) => renderRow(tail, rendered + colour)
         case _ => renderRow(tail, rendered + "?")
     }
