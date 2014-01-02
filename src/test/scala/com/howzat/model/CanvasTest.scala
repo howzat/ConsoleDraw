@@ -13,7 +13,7 @@ class CanvasTest extends FreeSpec with ShouldMatchers {
 
   private val rectangle: Rectangle = Rectangle(Position(20, 20), Position(20, 20))
   private val line: Line = Line(Position(20, 20), Position(20, 20))
-  private val fill: Fill = Fill(Position(20, 20), "x")
+  private val fill: FillPoint = FillPoint(Position(20, 20), "x")
 
   "Canvas of heigth 100 and width 100" - {
 
