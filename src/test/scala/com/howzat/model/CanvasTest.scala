@@ -44,4 +44,11 @@ class CanvasTest extends FreeSpec with ShouldMatchers {
       canvas.elements should be(Vector(fill, line))
     }
   }
+
+  "Can turn a canvas into an element grid" - {
+
+    "2 x 2 grid" in {
+//       Canvas(2,2) toElementGrid should be( List( List( VBorder() )))
+    }
+  }
 }

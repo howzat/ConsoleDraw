@@ -12,59 +12,41 @@ import com.howzat.model.FillPoint
 import com.howzat.draw.commands.Quit
 import com.howzat.draw.commands.DrawLine
 import scala.Some
-import com.howzat.{Result, DrawingSession}
+import com.howzat.{ConsoleDrawingApp, CommandEither, DrawingSession}
 
 
 object ConsoleDrawingMain extends App {
 
-  private val validation     = new CommandValidation(new InputValidation)
-  private val parser         = new InputParser(new InputValidation)
-  private var drawingSession = new DrawingSession(Layout.default)
+  private val validation = new CommandValidation(new InputValidation)
+  private val parser     = new InputParser(new InputValidation)
+  private val app        = new ConsoleDrawingApp()
+
   private def prompt() = print("Enter command:")
 
   prompt()
 
   while(true) {
     val line = Console.readLine trim()
-    parser parse line map (runInputCommand(_)) getOrElse {
-      output(s"'$line' is not recognised as a valid command")
+    parser parse line map (processInput(_)) getOrElse {
+      output(s"Oops: '$line' is not recognised as a valid command")
       prompt()
     }
   }
 
-  private def runInputCommand(input: Result) {
+  def processInput(input: CommandEither) {
     validate(input) match {
       case Left(error) => output(error)
-      case Right(cmnd) => output(execute(cmnd))
+      case Right(command) => command match {
+        case Quit() => System.exit(0)
+        case c:Command => output(app.enterCommand(c))
+      }
     }
   }
 
-  private def execute(command: Command) = {
-    command match {
-      case Quit() => System.exit(0)
-      case NewCanvas(w, h) => drawingSession newCanvas(w, h)
-      case _ => toElement(command) map (drawingSession placeElement (_)) map {
-        _ match {
-          case Right(updated) => Printer print updated
-          case Left(errors) => s"Oops: $errors"
-        }
-      } get
-    }
-  }
-
-  private def toElement(command: Command): Option[Element] = {
-    command match {
-      case DrawLine(tl, br) => Some(Line(tl, br))
-      case ApplyFill(pos, c) => Some(FillPoint(pos, c))
-      case DrawRectangle(tl, br) => Some(Rectangle(tl, br))
-      case _ => None
-    }
-  }
-
-  def validate(input: Result): Result = {
+  def validate(input: CommandEither): CommandEither = {
     for {
       command <- input.right
-      valid <- validation isValid (command) right
+      valid   <- validation isValid (command) right
     } yield valid
   }
 

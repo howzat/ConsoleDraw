@@ -1,6 +1,6 @@
 package com.howzat.model
 
-import com.howzat.CanvasResult
+import com.howzat.CanvasEither
 import com.howzat.draw.model.Position
 
 
@@ -10,7 +10,7 @@ object Layout {
 
 trait Layout {
 
-  def placeElement(e:Element, canvas:Canvas) : CanvasResult
+  def placeElement(e:Element, canvas:Canvas) : CanvasEither
 
   def positionedWithinCanvas(e:Element, c:Canvas) = {
     if(e.topLeft > c.topLeft && e.bottomRight < c.bottomRight ) Right((e, c))
@@ -43,7 +43,7 @@ trait Layout {
 
 class BasicLayout() extends Layout {
 
-  override def placeElement(e: Element, canvas: Canvas): CanvasResult = {
+  override def placeElement(e: Element, canvas: Canvas): CanvasEither = {
     fitsWithinCanvas(e, canvas) match {
       case Right(_) => Right(canvas + e)
       case Left(errors) => Left(errors)

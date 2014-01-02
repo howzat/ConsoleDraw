@@ -5,6 +5,6 @@ import com.howzat.model.Canvas
 
 package object howzat {
 
-  type Result = Either[String, Command]
-  type CanvasResult = Either[String, Canvas]
+  type CommandEither = Either[String, Command]
+  type CanvasEither = Either[String, Canvas]
 }

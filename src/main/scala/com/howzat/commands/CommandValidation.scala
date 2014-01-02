@@ -4,18 +4,18 @@ package com.howzat.draw.commands
 
 import scala.util.{Failure, Success, Try}
 import com.howzat.io.InputValidation
-import com.howzat.Result
+import com.howzat.CommandEither
 
 class CommandValidation(inputValidation: InputValidation) {
 
   import inputValidation._
 
-  def ensure(results: Result*) : Result = {
+  def ensure(results: CommandEither*) : CommandEither = {
     if(results exists (_.isLeft)) Left(collectErrors(results))
     else Right(results.head.right.get)
   }
 
-  def isValid(command:Command) : Result = {
+  def isValid(command:Command) : CommandEither = {
     command match {
       case cmd@Quit() => Right(cmd)
       case cmd@NewCanvas(_,_) => validateNewCanvas(cmd)
@@ -26,7 +26,7 @@ class CommandValidation(inputValidation: InputValidation) {
     }
   }
   
-  private def validateNewCanvas(canvas: NewCanvas): Result = {
+  private def validateNewCanvas(canvas: NewCanvas): CommandEither = {
     validateParameters (
       greaterThanZero(canvas height, "height"),
       greaterThanZero(canvas width, "width")) {
@@ -35,7 +35,7 @@ class CommandValidation(inputValidation: InputValidation) {
   }
 
 
-  private def validateDrawLine(line: DrawLine): Result = {
+  private def validateDrawLine(line: DrawLine): CommandEither = {
     import line._
     def isHorizontal(line: DrawLine) = topLeft.x == line.bottomRight.x
     def isVertical(line: DrawLine) = topLeft.y == bottomRight.y
@@ -58,11 +58,11 @@ class CommandValidation(inputValidation: InputValidation) {
     )
   }
 
-  private def validateApplyFill(fill: ApplyFill) : Result = {
+  private def validateApplyFill(fill: ApplyFill) : CommandEither = {
     Right(fill)
   }
 
-  private def validateRectangle(rectangle: DrawRectangle) : Result = {
+  private def validateRectangle(rectangle: DrawRectangle) : CommandEither = {
     Right(rectangle)
   }
 }

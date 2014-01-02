@@ -7,7 +7,7 @@ class DrawingSession(layout:Layout) {
   
   var canvas:Option[Canvas] = None
   
-  def placeElement(element: Element) : CanvasResult = {
+  def placeElement(element: Element) : CanvasEither = {
     canvas map {
       c => layout placeElement(element, c)
     } getOrElse Left("you must create a canvas before using draw commands e.g. 'C 10 10'")
