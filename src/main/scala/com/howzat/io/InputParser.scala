@@ -3,7 +3,7 @@ package com.howzat.io
 import java.io.InputStream
 import scala.util.matching.Regex
 import scala.util.{Failure, Success, Try}
-import com.howzat.draw
+import com.howzat.{Result, draw}
 import com.howzat.draw.commands._
 import scala.Some
 import scala.Some
@@ -35,7 +35,7 @@ class InputParser(validation:InputValidation) {
     }
   }
 
-  private def newFill(x1: String, y1: String, colour: String): Either[String, Command] = {
+  private def newFill(x1: String, y1: String, colour: String): Result = {
     validateParameters (
         safelyToInt(x1, "x1"),
         safelyToInt(y1, "y1"),
@@ -47,7 +47,7 @@ class InputParser(validation:InputValidation) {
     }
   }
 
-  private def newLine(x1: String, y1: String, x2: String, y2: String): Either[String, Command] = {
+  private def newLine(x1: String, y1: String, x2: String, y2: String): Result = {
     validateParameters (
         safelyToInt(x1, "x1"),
         safelyToInt(y1, "y1"),
@@ -57,7 +57,7 @@ class InputParser(validation:InputValidation) {
     }
   }
 
-  private def newRectangle(x1: String, y1: String, x2: String, y2: String): Either[String, Command] = {
+  private def newRectangle(x1: String, y1: String, x2: String, y2: String): Result = {
     validateParameters (
         safelyToInt(x1, "x1"),
         safelyToInt(y1, "y1"),
@@ -67,7 +67,7 @@ class InputParser(validation:InputValidation) {
     }
   }
 
-  private def newCanvas(width: String, height: String): Either[String, Command]= {
+  private def newCanvas(width: String, height: String): Result= {
     validateParameters(
         safelyToInt(width,  "width"),
         safelyToInt(height, "height")) {

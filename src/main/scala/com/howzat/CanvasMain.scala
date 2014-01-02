@@ -12,58 +12,60 @@ import com.howzat.model.Fill
 import com.howzat.draw.commands.Quit
 import com.howzat.draw.commands.DrawLine
 import scala.Some
+import com.howzat.DrawingSession
 
 
 object CanvasMain extends App {
 
   import BasicLayout._
 
-  private val validation             = new CommandValidation(new InputValidation)
-  private val parser                 = new InputParser(new InputValidation)
-  private var canvas: Option[Canvas] = None
-
+  private val validation     = new CommandValidation(new InputValidation)
+  private val parser         = new InputParser(new InputValidation)
+  private var drawingSession = new DrawingSession(BasicLayout)
   private def prompt() = print("Enter command:")
 
   prompt()
 
   while(true) {
     val line = Console.readLine trim()
-    parser parse line map {
-      input =>
-        getCommand(input) match {
-          case Left(error) => output(error)
-          case Right(command) => command match {
-            case Quit() => System.exit(0)
-            case NewCanvas(w, h) => canvas = Some(Canvas(w, h))
-            case _ => canvas map (updateCanvas(command, _)) getOrElse {
-              output("you must create a canvas before using draw commands e.g. 'C 10 10'")
-              prompt()
-            }
-          }
-        }
-    } getOrElse unknownCommand(line)
+    parser parse line map (runInputCommand(_)) getOrElse {
+      output(s"'$line' is not recognised as a valid command")
+      prompt()
+    }
   }
 
-  def updateCanvas(command: Command, c: Canvas): Either[String, Canvas] = {
-    toElement(command) map {
-      element => placeElement(element, c)
-    } getOrElse Right(c)
+  private def runInputCommand(input: Either[String, Command]) {
+    validate(input) match {
+      case Left(error) => output(error)
+      case Right(cmnd) =>
+        output(execute(cmnd))
+        prompt()
+    }
   }
 
-
-  def toElement(command: Command): Option[Element] = {
+  private def execute(command: Command): Any = {
     command match {
-      case cmd@DrawLine(tl, br) => Some(Line(tl, br))
-      case cmd@ApplyFill(pos, c) => Some(Fill(pos, c))
-      case cmd@DrawRectangle(tl, br) => Some(Rectangle(tl, br))
+      case Quit() => System.exit(0)
+      case NewCanvas(w, h) => drawingSession newCanvas(w, h)
+      case _ =>
+        toElement(command) map (drawingSession placeElement (_)) map (output(_))
+        prompt()
+    }
+  }
+
+  private def toElement(command: Command): Option[Element] = {
+    command match {
+      case DrawLine(tl, br) => Some(Line(tl, br))
+      case ApplyFill(pos, c) => Some(Fill(pos, c))
+      case DrawRectangle(tl, br) => Some(Rectangle(tl, br))
       case _ => None
     }
   }
 
-  def getCommand(parsedInput: Either[String, Command]): Either[String, Command] = {
+  def validate(input: Either[String, Command]): Either[String, Command] = {
     for {
-      command <- parsedInput.right
-      valid <- validation.isValid(command).right
+      command <- input.right
+      valid <- validation isValid (command) right
     } yield valid
   }
 
@@ -71,9 +73,7 @@ object CanvasMain extends App {
     println(s"$cmd")
     prompt()
   }
-
-  def unknownCommand(line: String) {
-    println(s"'$line' is not recognised as a valid command")
-    prompt()
-  }
 }
+
+
+//              output("you must create a canvas before using draw commands e.g. 'C 10 10'")
