@@ -15,7 +15,7 @@ import scala.Some
 import com.howzat.{Result, DrawingSession}
 
 
-object CanvasMain extends App {
+object ConsoleDrawingMain extends App {
 
   private val validation     = new CommandValidation(new InputValidation)
   private val parser         = new InputParser(new InputValidation)

@@ -23,6 +23,11 @@ class ElementTest extends FreeSpec with ShouldMatchers {
     "should have width 60" in {
       rectangle.width should be(20)
     }
+
+    "should have position" in {
+      rectangle.topLeft should be(rectangle.topLeft)
+      rectangle.bottomRight should be(rectangle.bottomRight)
+    }
   }
 
   s"$line" - {
@@ -35,8 +40,9 @@ class ElementTest extends FreeSpec with ShouldMatchers {
       line.width should be(1)
     }
 
-    "should have width position" in {
-      line.position should be(line.position)
+    "should have position" in {
+      line.topLeft should be(line.topLeft)
+      line.bottomRight should be(line.bottomRight)
     }
   }
 
@@ -50,8 +56,10 @@ class ElementTest extends FreeSpec with ShouldMatchers {
       fill.width should be(1)
     }
 
-    "should have width position" in {
+    "should have position" in {
       fill.position should be(fill.position)
+      fill.topLeft should be(fill.position)
+      fill.bottomRight should be(fill.position)
     }
   }
 
