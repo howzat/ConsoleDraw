@@ -34,18 +34,13 @@ trait Layout {
       _ <- fitsVertically(e,c).right
     } yield ()
   }
-
-  def fits(e:Element, c:Canvas) = {
-
-
-  }
 }
 
 class BasicLayout() extends Layout {
 
   override def placeElement(e: Element, canvas: Canvas): CanvasEither = {
     fitsWithinCanvas(e, canvas) match {
-      case Right(_) => Right(canvas + e)
+      case Right(_) => canvas place e
       case Left(errors) => Left(errors)
     }
   }

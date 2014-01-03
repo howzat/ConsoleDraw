@@ -36,7 +36,7 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
     }
 
     "can place elements that are within the canvas boundaries" in {
-      session placeElement (rectangle) should be(Right(Canvas(100, 100, Vector(rectangle))))
+      session placeElement (rectangle) should be(Right(Canvas(100, 100)))
     }
 
 

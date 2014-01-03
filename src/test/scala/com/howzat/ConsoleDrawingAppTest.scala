@@ -35,7 +35,7 @@ class ConsoleDrawingAppTest extends FreeSpec with ShouldMatchers {
       app enterCommand( NewCanvas(20, 4) ) should be (output)
     }
 
-    "prints a line on the canvas" ignore {
+    "prints a line on the canvas" in {
       val output =
         """^----------------------
            ^|                    |
@@ -46,8 +46,5 @@ class ConsoleDrawingAppTest extends FreeSpec with ShouldMatchers {
 
       app enterCommand( DrawLine(Position(1,2), Position(6,2)) ) should be (output)
     }
-
-
-
   }
 }

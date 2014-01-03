@@ -3,16 +3,41 @@ package com.howzat.model
 import com.howzat.draw.model.Position
 import scala.collection.immutable.IndexedSeq
 import scala.annotation.tailrec
+import com.howzat.CanvasEither
 
-case class Canvas(width: Int, height: Int, elements: Vector[Element] = Vector.empty) {
+case class Canvas(width: Int, height: Int) {
 
   val CanvasTopLeft  = Position(0, 0)
   val BorderValue: Int = 2
   val borderedWidth  = width + BorderValue
   val borderedHeight = height + BorderValue
+  
+  lazy val initialState = emptyGrid
 
-  def +(e: Element) = {
-    copy(elements = e +: elements)
+  def place(element: Element) : CanvasEither = {
+    element match {
+      case e@Rectangle(_, _) => addRectangle(e)
+      case e@Line(_, _) => addLine(e)
+      case e@FillPoint(_, _) => addFill(e)
+    }
+  }
+
+  
+  def addRectangle(e:Rectangle) : CanvasEither = {
+    Left("")
+  }
+  
+  def addLine(e:Line) : CanvasEither = {
+    Left("")
+  }
+  
+  def addFill(e:FillPoint) : CanvasEither = {
+    Left("")  
+  }
+
+
+  def renderedPosition(line:Line) : Option[List[Element]] = {
+    None
   }
 
   private def emptyGrid: List[List[Element]] = {
@@ -27,9 +52,6 @@ case class Canvas(width: Int, height: Int, elements: Vector[Element] = Vector.em
     }
   }
 
-
-
-
   def isLeftBorder(pos:Position) = (!isVerticalBorder(pos) && pos.x == 0)
   def isRightBorder(pos:Position) = (!isVerticalBorder(pos) && pos.x == borderedWidth-1)
   def isTopBorder(pos:Position) = (pos.y == 0 && pos.x >=0 && pos.x <= borderedWidth)
@@ -38,31 +60,5 @@ case class Canvas(width: Int, height: Int, elements: Vector[Element] = Vector.em
   def isHorizontalBorder(pos:Position) = (isLeftBorder(pos) || isRightBorder(pos))
   def toElementGrid: List[List[Element]] = emptyGrid
   def topLeft = CanvasTopLeft
-
-
   def bottomRight = Position(width-1, height-1)
-
 }
-
-
-/*
-
-
-val BorderValue: Int = 2
-  val width = horizontalSpace + BorderValue
-  val height = verticalSpace + BorderValue
-  def hasLeftBorderAt(pos:Position) = (!isVerticalBorder(pos) && pos.x == 0)
-  def hasRighBorder(pos:Position)  = (!isVerticalBorder(pos) && pos.x == width)
-  
-  private def isTopBorder(pos:Position) = (pos.y == 0 && pos.x >=0 && pos.x < width)
-  private def isBottomBorder(pos:Position)  = (pos.y == height && pos.x >=0 && pos.x < width)
-  def isVerticalBorder(pos:Position) = (isTopBorder(pos) || isBottomBorder(pos))
-  /*
-  List(
-      List(VBorder(Position(0,0)), VBorder(Position(0,1)), VBorder(Position(0,2)), VBorder(Position(0,3))), 
-      List(HBorder(Position(1,0)), Empty(Position(1,1)), Empty(Position(1,2)), Empty(Position(1,3))), 
-      List(HBorder(Position(2,0)), Empty(Position(2,1)), Empty(Position(2,2)), Empty(Position(2,3))),
-      List(HBorder(Position(3,0)), Empty(Position(3,1)), Empty(Position(3,2)), Empty(Position(3,3)))
-  )
-   */
- */

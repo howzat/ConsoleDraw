@@ -13,7 +13,6 @@ import com.howzat.draw.commands.DrawRectangle
 import com.howzat.draw.commands.ApplyFill
 import com.howzat.draw.commands.NewCanvas
 import com.howzat.draw.model.Position
-import com.howzat.io.{InputValidation, InputParser}
 
 
 @RunWith(classOf[JUnitRunner])

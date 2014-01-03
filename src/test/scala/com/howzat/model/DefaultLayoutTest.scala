@@ -39,7 +39,7 @@ class DefaultLayoutTest extends FreeSpec with ShouldMatchers {
 
     "places the element if it is inside the canvas boundaries" in {
       val canvas: Canvas = Canvas(100, 100)
-      layout placeElement(rectangle, canvas) should be ( Right(Canvas(100,100,Vector(rectangle))) )
+      layout placeElement(rectangle, canvas) should be ( Right(Canvas(100,100)) )
     }
   }
 }
