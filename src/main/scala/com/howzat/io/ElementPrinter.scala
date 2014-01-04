@@ -13,14 +13,14 @@ import com.howzat.model.Line
 import com.howzat.model.FillPoint
 import com.howzat.model.HBorder
 
-case class BorderedPrinter(emptyChar:String="o") {
+case class ElementPrinter(emptyChar:String="o") {
 
   private val border = 2
 
   def addBorder(i: Int, i1: Int, elements: List[List[Element]]) = elements
 
   def printCanvas(canvas: Canvas): String = {
-    renderRows(canvas toElementGrid)
+    renderRows(canvas grid)
   }
 
   def renderRows(rows: List[List[Element]], rendered:String="") :String = {

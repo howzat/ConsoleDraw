@@ -14,69 +14,16 @@ class ElementTest extends FreeSpec with ShouldMatchers {
   val horizontalLine = Line(Position(40, 40), Position(40, 90))
   val verticalLine   = Line(Position(40, 40), Position(90, 40))
 
+  "rendering occupied positions" - {
 
-  s"$rectangle" - {
+    "can find rendered positions for a line" in {
+      (Line renderPositions((1, 1), (1, 3))) should be (
+        List[Element](Line((1, 1),(1, 1)), Line((1, 2),(1, 2)), Line((1, 3),(1, 3)))
+      )
 
-    "should have height 20" in {
-      rectangle.height should be(60)
-    }
-
-    "should have width 60" in {
-      rectangle.width should be(20)
-    }
-
-    "should have position" in {
-      rectangle.topLeft should be(rectangle.topLeft)
-      rectangle.bottomRight should be(rectangle.bottomRight)
+      (Line renderPositions((1, 1), (3, 1))) should be(
+        List[Element](Line((1, 1),(1, 1)), Line((2, 1),(2, 1)), Line((3, 1),(3, 1)))
+      )
     }
   }
-
-  s"$horizontalLine" - {
-
-    "should have height 1" in {
-      horizontalLine.height should be(50)
-    }
-
-    "should have width 1" in {
-      horizontalLine.width should be(1)
-    }
-
-    "should have position" in {
-      horizontalLine.topLeft should be(horizontalLine.topLeft)
-      horizontalLine.bottomRight should be(horizontalLine.bottomRight)
-    }
-  }
-
-  s"$verticalLine" - {
-
-    "should have height 1" in {
-      verticalLine.height should be(1)
-    }
-
-    "should have width 1" in {
-      verticalLine.width should be(50)
-    }
-
-    "should have position" in {
-      verticalLine.topLeft should be(verticalLine.topLeft)
-      verticalLine.bottomRight should be(verticalLine.bottomRight)
-    }
-  }
-
-  s"$fill" - {
-
-    "should have height 1" in {
-      fill.height should be(1)
-    }
-
-    "should have width 1" in {
-      fill.width should be(1)
-    }
-
-    "should have position" in {
-      fill.topLeft should be(fill.bottomRight)
-      fill.bottomRight should be(fill.topLeft)
-    }
-  }
-
 }

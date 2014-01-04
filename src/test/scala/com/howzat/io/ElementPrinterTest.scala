@@ -5,13 +5,13 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.howzat.model.{Element, Empty, HBorder, Canvas}
-import com.howzat.draw.model.Position
+import com.howzat.draw.model.Position._
 
 @RunWith(classOf[JUnitRunner])
-class BorderedPrinterTest extends FreeSpec with ShouldMatchers  {
+class ElementPrinterTest extends FreeSpec with ShouldMatchers  {
 
-  val printer = BorderedPrinter()
-  val emptyRow = List(HBorder(Position(0,1)), Empty(Position(1,1)), Empty(Position(2,1)), HBorder(Position(3,1)))
+  val printer = ElementPrinter()
+  val emptyRow = List(HBorder((0,1)), Empty((1,1)), Empty((2,1)), HBorder((3,1)))
 
   "Canvas Printer " - {
 

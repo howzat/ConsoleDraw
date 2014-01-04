@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FreeSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.howzat.draw.model.Position
+import com.howzat.draw.model.Position._
 import com.howzat.io.InputValidation
 
 @RunWith(classOf[JUnitRunner])
@@ -35,33 +35,33 @@ class CommandValidationTest extends FreeSpec with ShouldMatchers {
   "Draw Line command validation" - {
 
     "should fail is the line is not horizontal" in {
-      val diagonal = DrawLine(Position(1, 1), Position(10, 10))
+      val diagonal = DrawLine((1, 1), (10, 10))
       validation isValid (diagonal) should be(Left("lines must be drawn either vertically or horizontally"))
     }
 
     "should fail is the line has 0 length" in {
-      val lengthZero = DrawLine(Position(1, 1), Position(1, 1))
+      val lengthZero = DrawLine((1, 1), (1, 1))
       validation isValid (lengthZero) should be(Left("line length cannot be zero"))
     }
 
     "should fail if any position contains negative numbers" in {
-      val lengthZero = DrawLine(Position(-1,10), Position(-10, 10))
+      val lengthZero = DrawLine((-1,10), (-10, 10))
       validation isValid (lengthZero) should be(Left("param 'top left x' must be greater than zero, param 'bottom right x' must be greater than zero"))
     }
     
     "should fail if any position contains 0" in {
-      val startsAtZero = DrawLine(Position(0,10), Position(10, 10))
+      val startsAtZero = DrawLine((0,10), (10, 10))
       validation isValid (startsAtZero) should be(Left("param 'top left x' must be greater than zero"))
     }
 
     "should pass lines that are vertical" in {
-      val vertical = DrawLine(Position(1, 1), Position(1, 10))
-      validation isValid (vertical) should be(Right(DrawLine(Position(1, 1), Position(1, 10))))
+      val vertical = DrawLine((1, 1), (1, 10))
+      validation isValid (vertical) should be(Right(DrawLine((1, 1), (1, 10))))
     }
 
     "should pass lines that are horizontal" in {
-      val horizontal = DrawLine(Position(1, 1), Position(10, 1))
-      validation isValid (horizontal) should be(Right(DrawLine(Position(1, 1), Position(10, 1))))
+      val horizontal = DrawLine((1, 1), (10, 1))
+      validation isValid (horizontal) should be(Right(DrawLine((1, 1), (10, 1))))
     }
   }
 }

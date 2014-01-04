@@ -41,7 +41,7 @@ class InputParser(validation:InputValidation) {
         safelyToInt(y1, "y1"),
         nonEmptyString(colour, "colour")) {
       params => // Would have to use HLists to retain type information, but this is safe (if not pleasant)
-        val position = new Position(params(0).asInstanceOf[Int], params(1).asInstanceOf[Int])
+        val position = (params(0).asInstanceOf[Int], params(1).asInstanceOf[Int])
         val colours = params(2).asInstanceOf[String]
         ApplyFill( position, colours )
     }
@@ -53,7 +53,7 @@ class InputParser(validation:InputValidation) {
         safelyToInt(y1, "y1"),
         safelyToInt(x2, "x2"),
         safelyToInt(y2, "y2")) {
-      params => DrawLine( new Position(params(0),params(1)), new Position(params(2),params(3)))
+      params => DrawLine( (params(0),params(1)), (params(2),params(3)))
     }
   }
 
@@ -63,7 +63,7 @@ class InputParser(validation:InputValidation) {
         safelyToInt(y1, "y1"),
         safelyToInt(x2, "x2"),
         safelyToInt(y2, "y2")) {
-      params => DrawRectangle( new Position(params(0),params(1)), new Position(params(2),params(3)))
+      params => DrawRectangle( (params(0),params(1)), (params(2),params(3)))
     }
   }
 
