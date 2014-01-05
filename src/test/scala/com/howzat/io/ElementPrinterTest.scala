@@ -11,18 +11,8 @@ import com.howzat.draw.model.Position._
 class ElementPrinterTest extends FreeSpec with ShouldMatchers  {
 
   val printer = ElementPrinter()
-  val emptyRow = List(HBorder((0,1)), Empty((1,1)), Empty((2,1)), HBorder((3,1)))
 
   "Canvas Printer " - {
-
-    "renders an empty row " in {
-      printer renderRow (emptyRow) should be ("|oo|")
-    }
-
-    "renders multiple empty rows " in {
-      val row: List[Element] = emptyRow
-      printer renderRows(List(row, row), "") should be ("|oo|\n|oo|")
-    }
 
     "prints empty canvas" in {
 
@@ -34,7 +24,9 @@ class ElementPrinterTest extends FreeSpec with ShouldMatchers  {
           ^|oooo|
           ^------""".stripMargin('^')
 
-      printer printCanvas (Canvas(4,4)) should be (output)
+      val s: String = printer printCanvas (Canvas(4, 4, Nil))
+      println(s"'$s'")
+      s should be (output)
     }
   }
 

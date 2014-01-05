@@ -11,13 +11,15 @@ object Line {
     bottomRight.x > topLeft.x && bottomRight.y == topLeft.y
   }
 
-  def renderPositions(from: Position, to: Position): List[Element] = {
-    if(isVertical(from, to)) from.y to to.y map {
-      y => Line(Position(to.x, y), Position(to.x, y))
+  def renderLines(from: Position, to: Position): List[Element] = {
+    renderPositions(from, to) map {
+      pos => Line(pos, pos)
     }
-    else from.x to to.x map {
-      x => Line(Position(x, from.y), Position(x, from.y))
-    }
+  }
+
+  def renderPositions(from: Position, to: Position): List[Position] = {
+    if(isVertical(from, to)) from.y to to.y map (y => Position(to.x, y))
+    else from.x to to.x map (x => Position(x, from.y))
   } toList
 }
 

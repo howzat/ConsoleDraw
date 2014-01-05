@@ -15,34 +15,25 @@ import com.howzat.model.HBorder
 
 case class ElementPrinter(emptyChar:String="o") {
 
-  private val border = 2
-
-  def addBorder(i: Int, i1: Int, elements: List[List[Element]]) = elements
-
   def printCanvas(canvas: Canvas): String = {
-    renderRows(canvas grid)
-  }
-
-  def renderRows(rows: List[List[Element]], rendered:String="") :String = {
-    val rowStrings = for (row <- rows) yield renderRow(row)
-    rowStrings mkString("\n")
-  }
-
-  def renderRow(elems: List[Element], rendered:String="") : String = elems match {
-    case Nil => rendered
-    case head :: tail =>
-      head match {
-        case HBorder(_) => renderRow(tail, rendered + "|")
-        case VBorder(_) => renderRow(tail, rendered + "-")
-        case Line(_, _) => renderRow(tail, rendered + "*")
-        case Rectangle(_, _) => renderRow(tail, rendered + "*")
-        case Empty(_) => renderRow(tail, rendered + emptyChar)
-        case FillPoint(_, colour) => renderRow(tail, rendered + colour)
-        case _ => renderRow(tail, rendered + "?")
+    val rowStrings = for {
+      element <- canvas.getElements
+    } yield {
+      if(canvas.isRightEdge(element.bottomRight)) render(element) + "\n"
+      else render(element)
     }
+    (rowStrings mkString("")) .dropRight(1)
   }
 
-  def renderVerticalBorder(i: Int) = {
-    List.fill(i)("-") mkString("")
+  def render(element: Element): String = {
+    element match {
+      case HBorder(_) => "|"
+      case VBorder(_) => "-"
+      case Line(_, _) => "x"
+      case Rectangle(_, _) => "x"
+      case Empty(_) => emptyChar
+      case FillPoint(_, colour) => colour
+      case _ => "?"
+    }
   }
 }

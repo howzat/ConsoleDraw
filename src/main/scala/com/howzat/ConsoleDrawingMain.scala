@@ -69,7 +69,10 @@ object ConsoleDrawingMain extends App {
 
   private def renderCanvas(command: Command): String = {
     draw(command) match {
-      case Right(canvas) => printer printCanvas canvas
+      case Right(canvas) => {
+        printer printCanvas canvas
+
+      }
       case Left(errorString) => s"Oops: $errorString"
     }
   }

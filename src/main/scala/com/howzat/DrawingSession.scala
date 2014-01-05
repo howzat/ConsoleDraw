@@ -10,42 +10,47 @@ import scala.Some
 
 class DrawingSession {
 
-  import Borders._
-
   var canvasState: Option[Canvas] = None
 
   private[this] def withCanvas(draw: (Canvas) => CanvasEither): CanvasEither = {
+
+    println(canvasState)
     canvasState map ( draw(_) ) getOrElse {
       Left("you must create a canvas before using draw commands e.g. 'C 10 10'")
     }
   }
 
   private def draw(elements: List[Element], canvas:Canvas): CanvasEither = {
-    for {
-      _ <- Borders withinCanvas(elements, canvas) right
-    } yield canvas update (elements)
+    canvas withinCanvas(elements) match {
+      case er@Left(error) => er
+      case Right(_) => {
+        val newState = canvas update (elements)
+        canvasState = Some(newState)
+        Right(newState)
+      }
+    }
   }
 
   def newCanvas(width: Int, height: Int) = {
-    canvasState = Some(Canvas(width, height))
+    canvasState = Some(Canvas(width, height, Nil))
     Right(canvasState get)
   }
 
   def drawLine(from: Position, to: Position) = withCanvas { 
     canvas =>
-      val lines = Line renderPositions(from, to)
+      val lines = Line renderLines(from, to)
       draw(lines, canvas)
   }
 
   def fill(clickPoint: Position, colour: String) = withCanvas {
     canvas => 
-      val fillArea = FillPoint renderPositions(clickPoint, colour, canvas)
+      val fillArea = FillPoint renderFillArea(clickPoint, colour, canvas)
       draw(fillArea, canvas)
   }
 
   def drawRectangle(topLeft: Position, bottomRight: Position) = withCanvas {
     canvas =>
-      val rectangles = Rectangle renderPositions(topLeft, bottomRight)
+      val rectangles = Rectangle renderRectangles (topLeft, bottomRight)
       draw(rectangles, canvas)
   }
 }

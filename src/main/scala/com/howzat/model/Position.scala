@@ -17,10 +17,28 @@ object Position {
   implicit def positionToTuple(p:Position): Tuple2[Int, Int]= {
     (p.x,p.y)
   }
+
+  implicit def positionOrdering: Ordering[Position] = Ordering.fromLessThan{ case (p1, p2) =>
+    (p1.y < p2.y) || (p1.x < p2.x)
+  }
+
 }
 
 case class Position(x:Int, y:Int) {
 
-  def > (p:Position) = x >= p.x && y >= p.y
+  def > (p:Position) = x > p.x && y > p.y
   def < (p:Position) = x < p.x && y < p.y
+
+  def north() = copy(y=y-1)
+  def northEast() = copy(x+1, y-1)
+  def east() = copy(x=x+1)
+  def southEast() = copy(x+1,y+1)
+  def south() = copy(y=y+1)
+  def southWest() = copy(x-1,y+1)
+  def west() = copy(x=x-1)
+  def northWest() = copy(x-1,y-1)
+
+  lazy val neighbours: List[Position] = {
+    List(north(), east(), south(), west())
+  }
 }
