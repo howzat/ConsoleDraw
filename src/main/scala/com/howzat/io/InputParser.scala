@@ -1,18 +1,12 @@
 package com.howzat.io
 
-import java.io.InputStream
-import scala.util.matching.Regex
-import scala.util.{Failure, Success, Try}
-import com.howzat.{CommandEither, draw}
+import com.howzat.CommandEither
 import com.howzat.draw.commands._
-import scala.Some
-import scala.Some
 import com.howzat.draw.commands.ApplyFill
 import com.howzat.draw.commands.Quit
 import com.howzat.draw.commands.DrawLine
 import scala.Some
 import com.howzat.draw.commands.DrawRectangle
-import com.howzat.draw.model.Position
 
 class InputParser(validation:InputValidation) {
 

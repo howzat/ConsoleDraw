@@ -2,9 +2,13 @@ package com.howzat.draw.commands
 
 
 
-import scala.util.{Failure, Success, Try}
 import com.howzat.io.InputValidation
-import com.howzat.CommandEither
+import com.howzat._
+import com.howzat.draw.commands.ApplyFill
+import com.howzat.draw.commands.NewCanvas
+import com.howzat.draw.commands.Quit
+import com.howzat.draw.commands.DrawLine
+import com.howzat.draw.commands.DrawRectangle
 
 class CommandValidation(inputValidation: InputValidation) {
 
@@ -34,7 +38,6 @@ class CommandValidation(inputValidation: InputValidation) {
     }
   }
 
-
   private def validateDrawLine(line: DrawLine): CommandEither = {
     import line._
     def isHorizontal(line: DrawLine) = topLeft.x == line.bottomRight.x
@@ -63,6 +66,26 @@ class CommandValidation(inputValidation: InputValidation) {
   }
 
   private def validateRectangle(rectangle: DrawRectangle) : CommandEither = {
-    Right(rectangle)
+    
+    def isNotNegative(rectangle: DrawRectangle) = {
+      import rectangle._
+      validateParameters(
+        greaterThanZero(topLeft.x, "top left x"),
+        greaterThanZero(topLeft.y, "top left y"),
+        greaterThanZero(bottomRight.x, "bottom right x"),
+        greaterThanZero(bottomRight.y, "bottom right y")) {
+        params => rectangle
+      }
+    }
+
+    def topLeftLowerThanBottomRight(rectangle: DrawRectangle) : CommandEither = {
+      if(rectangle.topLeft < rectangle.bottomRight) Right(rectangle)
+      else Left("Rectangles top left position was below that of the bottom right. Use R tl.x tl.y br.x br.y")
+    }
+    
+    ensure (
+       isNotNegative(rectangle),
+       topLeftLowerThanBottomRight(rectangle)
+     )
   }
 }

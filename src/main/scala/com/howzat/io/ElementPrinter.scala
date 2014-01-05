@@ -1,11 +1,6 @@
 package com.howzat.io
 
 import com.howzat.model._
-import scala._
-import com.howzat.draw.model.Position
-import scala.collection.immutable
-import com.howzat.draw.model.Position
-import com.howzat.draw.model.Position
 import com.howzat.model.Empty
 import com.howzat.model.Rectangle
 import com.howzat.model.Canvas

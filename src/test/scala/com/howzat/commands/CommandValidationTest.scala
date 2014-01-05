@@ -19,7 +19,7 @@ class CommandValidationTest extends FreeSpec with ShouldMatchers {
 
   "NewCanvas command validation" - {
 
-    "should fail when either width or hieght is 0" in {
+    "should fail when either width or height is 0" in {
       validation isValid (NewCanvas(0, 0)) should be(Left("param 'height' must be greater than zero, param 'width' must be greater than zero"))
       validation isValid (NewCanvas(1, 0)) should be(Left("param 'height' must be greater than zero"))
       validation isValid (NewCanvas(0, 1)) should be(Left("param 'width' must be greater than zero"))
@@ -62,6 +62,19 @@ class CommandValidationTest extends FreeSpec with ShouldMatchers {
     "should pass lines that are horizontal" in {
       val horizontal = DrawLine((1, 1), (10, 1))
       validation isValid (horizontal) should be(Right(DrawLine((1, 1), (10, 1))))
+    }
+  }
+
+  "Draw Rectangle command validation" - {
+
+    "should fail if any position contains negative numbers" in {
+      val wrong = DrawRectangle((-1, -1), (10,10))
+      validation isValid (wrong) should be(Left("param 'top left x' must be greater than zero, param 'top left y' must be greater than zero"))
+    }
+
+    "should fail is the top left is below the bottom right" in {
+      val wrong = DrawRectangle((10, 10), (1, 1))
+      validation isValid (wrong) should be(Left("Rectangles top left position was below that of the bottom right. Use R tl.x tl.y br.x br.y"))
     }
   }
 }

@@ -1,8 +1,5 @@
 package com.howzat.model
 
-import com.howzat.draw.model.Position._
-import scala.collection.immutable.IndexedSeq
-import scala.annotation.tailrec
 import com.howzat.CanvasEither
 import com.howzat.draw.model.Position
 import scala.collection.parallel.immutable.ParVector

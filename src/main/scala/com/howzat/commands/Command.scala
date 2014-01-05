@@ -1,6 +1,5 @@
 package com.howzat.draw.commands
 
-import com.howzat.draw._
 import com.howzat.draw.model.Position
 
 trait Command

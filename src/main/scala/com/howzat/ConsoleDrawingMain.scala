@@ -1,17 +1,7 @@
 package com.howzat.draw
 
 import com.howzat.draw.commands._
-import com.howzat.io.{ElementPrinter, InputValidation, InputParser}
-import com.howzat.model._
-import com.howzat.draw.commands.DrawLine
-import com.howzat.draw.commands.DrawRectangle
-import com.howzat.model.Canvas
-import com.howzat.draw.commands.ApplyFill
-import com.howzat.draw.commands.NewCanvas
-import com.howzat.model.FillPoint
-import com.howzat.draw.commands.Quit
-import com.howzat.draw.commands.DrawLine
-import scala.Some
+import com.howzat.io.{InputValidation, InputParser}
 import com.howzat._
 import com.howzat.draw.commands.ApplyFill
 import com.howzat.draw.commands.Quit

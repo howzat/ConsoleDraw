@@ -1,13 +1,7 @@
 package com.howzat.model
 
 import com.howzat.draw.model.Position
-import scala.collection.+:
 import scala._
-import com.howzat.model.{Element, Empty, Canvas}
-import scala.collection.+:
-import scala.+:
-import scala.Some
-import scala.collection.generic.CanBuildFrom
 
 object FillPoint {
 

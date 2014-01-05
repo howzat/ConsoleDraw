@@ -1,7 +1,6 @@
 package com.howzat
 
 import com.howzat.model._
-import java.util.concurrent.atomic.{AtomicReference, AtomicBoolean}
 import scala._
 import com.howzat.draw.model.Position
 import com.howzat.model.Rectangle
@@ -13,8 +12,6 @@ class DrawingSession {
   var canvasState: Option[Canvas] = None
 
   private[this] def withCanvas(draw: (Canvas) => CanvasEither): CanvasEither = {
-
-    println(canvasState)
     canvasState map ( draw(_) ) getOrElse {
       Left("you must create a canvas before using draw commands e.g. 'C 10 10'")
     }

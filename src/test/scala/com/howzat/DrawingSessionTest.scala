@@ -90,7 +90,6 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
       val opt = session drawLine((6, 3), (6, 4))
       opt.isRight should be(true)
       val canvas = printer printCanvas (opt.right.get)
-      println(canvas)
       canvas should be(output)
     }
 

@@ -1,6 +1,5 @@
 package com.howzat.io
 
-import com.howzat.draw.commands.Command
 import scala.util.{Failure, Success, Try}
 
 class InputValidation {
