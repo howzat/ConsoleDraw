@@ -1,6 +1,5 @@
 package com.howzat.model
 
-import com.howzat.draw.model.Position
 import scala._
 
 object FillPoint {

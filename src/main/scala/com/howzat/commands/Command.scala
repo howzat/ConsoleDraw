@@ -1,6 +1,6 @@
-package com.howzat.draw.commands
+package com.howzat.commands
 
-import com.howzat.draw.model.Position
+import com.howzat.model.Position
 
 trait Command
 case class Quit() extends Command

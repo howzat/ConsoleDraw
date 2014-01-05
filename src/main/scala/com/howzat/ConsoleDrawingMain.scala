@@ -1,20 +1,14 @@
 package com.howzat
 
-import com.howzat.draw.commands._
-import com.howzat.io.{InputValidation, InputParser}
-import com.howzat._
-import com.howzat.draw.commands.ApplyFill
-import com.howzat.draw.commands.Quit
+import com.howzat.io.InputParser
+import com.howzat.commands._
 import com.howzat.io.ElementPrinter
-import com.howzat.draw.commands.NewCanvas
-import com.howzat.draw.commands.DrawLine
-import com.howzat.draw.commands.DrawRectangle
 
 
 object ConsoleDrawingMain extends App {
 
-  private val validation = new CommandValidation(new InputValidation)
-  private val parser     = new InputParser(new InputValidation)
+  private val validation = new CommandValidation()
+  private val parser     = new InputParser()
   private var session    = new DrawingSession()
   private var printer    = ElementPrinter(" ")
 
@@ -34,7 +28,6 @@ object ConsoleDrawingMain extends App {
   def read(line: String) {
     parser parse line map (processInput(_)) getOrElse {
       output(s"Oops: '$line' is not recognised as a valid command")
-      prompt()
     }
   }
 
@@ -55,14 +48,9 @@ object ConsoleDrawingMain extends App {
     } yield valid
   }
 
-
-
   private def renderCanvas(command: Command): String = {
     draw(command) match {
-      case Right(canvas) => {
-        printer printCanvas canvas
-
-      }
+      case Right(canvas) => printer printCanvas canvas
       case Left(errorString) => s"Oops: $errorString"
     }
   }

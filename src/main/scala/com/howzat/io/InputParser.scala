@@ -1,14 +1,11 @@
 package com.howzat.io
 
 import com.howzat.CommandEither
-import com.howzat.draw.commands._
-import com.howzat.draw.commands.ApplyFill
-import com.howzat.draw.commands.Quit
-import com.howzat.draw.commands.DrawLine
+import com.howzat.commands._
 import scala.Some
-import com.howzat.draw.commands.DrawRectangle
+import com.howzat.commands.{DrawRectangle, DrawLine, ApplyFill, Quit}
 
-class InputParser(validation:InputValidation) {
+class InputParser {
 
   val CanvasRegex    = """C\s+(\d+)\s+(\d+)""".r
   val RectangleRegex = """R\s+(\d+)\s+(\d+)\s+(\d+)\s+(\d+)""".r
@@ -16,7 +13,7 @@ class InputParser(validation:InputValidation) {
   val FillRegex      = """B\s+(\d+)\s+(\d+)\s+([A-Za-z])""".r
   val QuitRegex      = """Q""".r
 
-  import validation._
+  import InputValidation._
   
   def parse(input: String) = {
     input trim match {

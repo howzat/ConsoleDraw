@@ -2,7 +2,7 @@ package com.howzat
 
 import com.howzat.model._
 import scala._
-import com.howzat.draw.model.Position
+import com.howzat.model.Position
 import com.howzat.model.Rectangle
 import com.howzat.model.FillPoint
 import scala.Some

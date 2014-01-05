@@ -1,9 +1,7 @@
 package com.howzat.model
 
 import com.howzat.CanvasEither
-import com.howzat.draw.model.Position
 import scala.collection.parallel.immutable.ParVector
-
 
 
 case class Canvas(width: Int, height: Int, state:List[Element]=Nil) {

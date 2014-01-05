@@ -1,16 +1,15 @@
-package com.howzat.draw.commands
+package com.howzat.commands
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FreeSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.howzat.draw.model.Position._
-import com.howzat.io.InputValidation
+import com.howzat.model.Position._
 
 @RunWith(classOf[JUnitRunner])
 class CommandValidationTest extends FreeSpec with ShouldMatchers {
 
-  val validation = new CommandValidation(new InputValidation)
+  val validation = new CommandValidation()
 
   "unrecognised commands should be rejected" in {
     case class Foo() extends Command

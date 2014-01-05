@@ -1,11 +1,11 @@
-package com.howzat.draw.commands
+package com.howzat.commands
 
-import com.howzat.io.InputValidation
 import com.howzat._
+import com.howzat.io.InputValidation
 
-class CommandValidation(inputValidation: InputValidation) {
+class CommandValidation() {
 
-  import inputValidation._
+  import InputValidation._
 
   def ensure(results: CommandEither*) : CommandEither = {
     if(results exists (_.isLeft)) Left(collectErrors(results))
@@ -59,7 +59,7 @@ class CommandValidation(inputValidation: InputValidation) {
   }
 
   private def validateRectangle(rectangle: DrawRectangle) : CommandEither = {
-    
+
     def isNotNegative(rectangle: DrawRectangle) = {
       import rectangle._
       validateParameters(
@@ -75,7 +75,7 @@ class CommandValidation(inputValidation: InputValidation) {
       if(rectangle.topLeft < rectangle.bottomRight) Right(rectangle)
       else Left("Rectangles top left position was below that of the bottom right. Use R tl.x tl.y br.x br.y")
     }
-    
+
     ensure (
        isNotNegative(rectangle),
        topLeftLowerThanBottomRight(rectangle)

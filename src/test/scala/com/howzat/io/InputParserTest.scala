@@ -4,21 +4,19 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FreeSpec
 import org.scalatest.matchers.ShouldMatchers
-import scala.util.{Failure, Success, Try}
-import scala.util.matching.Regex
-import com.howzat.draw.commands._
-import com.howzat.draw.commands.DrawLine
+import com.howzat.commands._
+import com.howzat.commands.DrawLine
 import scala.Some
-import com.howzat.draw.commands.DrawRectangle
-import com.howzat.draw.commands.ApplyFill
-import com.howzat.draw.commands.NewCanvas
-import com.howzat.draw.model.Position
+import com.howzat.commands.DrawRectangle
+import com.howzat.commands.ApplyFill
+import com.howzat.commands.NewCanvas
+import com.howzat.model.Position
 
 
 @RunWith(classOf[JUnitRunner])
 class InputParserTest extends FreeSpec with ShouldMatchers {
 
-  val parser = new InputParser(new InputValidation)
+  val parser = new InputParser()
 
   "Parser returns None for any input it cannot match " in {
     parser parse "any old junk" should be(None)

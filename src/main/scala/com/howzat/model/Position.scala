@@ -1,4 +1,4 @@
-package com.howzat.draw.model
+package com.howzat.model
 
 object Position {
 

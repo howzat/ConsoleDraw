@@ -2,7 +2,7 @@ package com.howzat.io
 
 import scala.util.{Failure, Success, Try}
 
-class InputValidation {
+object InputValidation {
 
   def validateParameters[T, P](results: Either[String, T]*)(f: Seq[T] => P) = {
     if(results exists (_.isLeft)) Left(collectErrors(results))

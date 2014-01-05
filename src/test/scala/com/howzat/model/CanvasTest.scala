@@ -1,12 +1,10 @@
 package com.howzat.model
 
-import org.scalatest.{FreeSpec, FunSuite}
+import org.scalatest.FreeSpec
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.matchers.ShouldMatchers
 import scala._
-import com.howzat.draw.model.Position._
-import com.howzat.draw.model.Position
 
 @RunWith(classOf[JUnitRunner])
 class CanvasTest extends FreeSpec with ShouldMatchers {

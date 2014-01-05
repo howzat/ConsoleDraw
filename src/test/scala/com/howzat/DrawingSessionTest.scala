@@ -1,14 +1,13 @@
 package com.howzat
 
-import org.scalatest.{FreeSpec, FunSuite}
+import org.scalatest.FreeSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.howzat.model._
-import com.howzat.draw.model.Position
+import com.howzat.model.Position
 import com.howzat.model.VBorder
 import com.howzat.model.HBorder
-import com.howzat.draw.commands.Command
 import com.howzat.io.ElementPrinter
 
 @RunWith(classOf[JUnitRunner])

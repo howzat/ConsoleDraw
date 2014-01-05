@@ -4,7 +4,6 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FreeSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.howzat.draw.model.Position
 
 @RunWith(classOf[JUnitRunner])
 class LineTest extends FreeSpec with ShouldMatchers {
