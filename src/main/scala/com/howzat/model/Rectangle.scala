@@ -11,7 +11,7 @@ object Rectangle {
     val left = Line renderPositions( topLeft, bottomRight.copy(x=topLeft.x) )
     val right = Line renderPositions( topLeft.copy(bottomRight.x), bottomRight )
 
-    (top ++ bottom ++ left ++ right distinct)
+    top ++ bottom ++ left ++ right distinct
   }
 
   def renderRectangles(topLeft:Position, bottomRight:Position) : List[Element] = {

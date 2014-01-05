@@ -6,7 +6,7 @@ import scala.collection.parallel.immutable.ParVector
 
 
 
-case class Canvas(width: Int, height: Int, val state:List[Element]=Nil) {
+case class Canvas(width: Int, height: Int, state:List[Element]=Nil) {
 
   val CanvasTopLeft = (1, 1)
   val BorderValue   = 2
@@ -24,14 +24,14 @@ case class Canvas(width: Int, height: Int, val state:List[Element]=Nil) {
   }
 
   lazy val elementMap:Map[Position, Element] = {
-    getElements map ( e => (e.topLeft -> e) ) toMap
+    getElements map ( e => e.topLeft -> e ) toMap
   }
 
   def getElements:List[Element] = if(state.isEmpty) emptyGrid() else state
 
   def update(ne: List[Element]): Canvas = {
     val newState = this.getElements map {
-      element => ne find (_.samePosition(element)) getOrElse (element)
+      element => ne find (_.samePosition(element)) getOrElse element
     }
 
     Canvas(width, height, state = newState)
@@ -51,17 +51,17 @@ case class Canvas(width: Int, height: Int, val state:List[Element]=Nil) {
     } getOrElse Right(this)
   }
 
-  def isRightEdge(pos: Position) = (pos.x == borderedWidth - 1)
+  def isRightEdge(pos: Position) = pos.x == borderedWidth - 1
   def isRightEdge(element: Element) = (element.topLeft.x == borderedWidth - 1) || (element.bottomRight.x == borderedWidth - 1)
 
   def topLeft = CanvasTopLeft
   def bottomRight = Position(width - 1, height - 1)
   val borderedWidth = width + BorderValue
   val borderedHeight = height + BorderValue
-  def isLeftBorder(pos: Position) = (!isVerticalBorder(pos) && pos.x == 0)
-  def isRightBorder(pos: Position) = (!isVerticalBorder(pos) && pos.x == borderedWidth - 1)
-  def isTopBorder(pos: Position) = (pos.y == 0 && pos.x >= 0 && pos.x <= borderedWidth)
-  def isBottomBorder(pos: Position) = (pos.y == borderedHeight - 1 && pos.x >= 0 && pos.x <= borderedWidth)
-  def isVerticalBorder(pos: Position) = (isTopBorder(pos) || isBottomBorder(pos))
-  def isHorizontalBorder(pos: Position) = (isLeftBorder(pos) || isRightBorder(pos))
+  def isLeftBorder(pos: Position) = !isVerticalBorder(pos) && pos.x == 0
+  def isRightBorder(pos: Position) = !isVerticalBorder(pos) && pos.x == borderedWidth - 1
+  def isTopBorder(pos: Position) = pos.y == 0 && pos.x >= 0 && pos.x <= borderedWidth
+  def isBottomBorder(pos: Position) = pos.y == borderedHeight - 1 && pos.x >= 0 && pos.x <= borderedWidth
+  def isVerticalBorder(pos: Position) = isTopBorder(pos) || isBottomBorder(pos)
+  def isHorizontalBorder(pos: Position) = isLeftBorder(pos) || isRightBorder(pos)
 }

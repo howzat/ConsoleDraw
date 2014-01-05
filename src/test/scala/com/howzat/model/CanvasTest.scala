@@ -88,8 +88,8 @@ class CanvasTest extends FreeSpec with ShouldMatchers {
     }
 
     "finds the right edge" in {
-      canvas isRightEdge (Line((0, 0), (3,0))) should be(true)
-      canvas isRightEdge (Line((3, 0), (3,3))) should be(true)
+      canvas isRightEdge Line((0, 0), (3, 0)) should be(true)
+      canvas isRightEdge Line((3, 0), (3, 3)) should be(true)
       canvas isRightEdge ((3, 1)) should be(true)
       canvas isRightEdge ((3, 2)) should be(true)
       canvas isRightEdge ((3, 3)) should be(true)
@@ -108,41 +108,41 @@ class CanvasTest extends FreeSpec with ShouldMatchers {
 
     "should fail to place elements that wont fit horizontally" in {
       val tooWide = Line((1, 1), (11, 1))
-      canvas withinCanvas (tooWide) should be(false)
+      canvas withinCanvas tooWide should be(false)
     }
 
     "should fail to place elements that wont fit vertically" in {
       val toTall = Line((1, 1), (1, 11))
-      canvas withinCanvas (toTall) should be(false)
+      canvas withinCanvas toTall should be(false)
 
       val elements = Line renderLines(toTall.from, toTall.to)
-      canvas withinCanvas (elements) should be(Left("element Line(Position(1,11),Position(1,11)) is positioned outside of the canvas"))
+      canvas withinCanvas elements should be(Left("element Line(Position(1,11),Position(1,11)) is positioned outside of the canvas"))
     }
 
     "places single points at 1,1" in {
       val elements2 = Line renderLines((1, 1), (1, 1))
-      canvas withinCanvas (elements2) should be(Right(canvas))
+      canvas withinCanvas elements2 should be(Right(canvas))
     }
 
     "fails if the element is outside the canvas" in {
       val line = Line((20, 20), (30, 30))
-      canvas withinCanvas (line) should be(false)
+      canvas withinCanvas line should be(false)
 
       val elements = Line renderLines((20, 20), (30, 30))
-      canvas withinCanvas (elements) should be(Left("element Line(Position(20,20),Position(20,20)) is positioned outside of the canvas"))
+      canvas withinCanvas elements should be(Left("element Line(Position(20,20),Position(20,20)) is positioned outside of the canvas"))
     }
 
     "fails to place if the element is outside the canvas" in {
       val line: Line = Line((20, 20), (40, 40))
-      canvas withinCanvas (line) should be(false)
+      canvas withinCanvas line should be(false)
 
       val elements = Line renderLines(line.from, line.to)
-      canvas withinCanvas (elements) should be(Left("element Line(Position(20,20),Position(20,20)) is positioned outside of the canvas"))
+      canvas withinCanvas elements should be(Left("element Line(Position(20,20),Position(20,20)) is positioned outside of the canvas"))
     }
 
     "places the element if it is inside the canvas boundaries" in {
       val line = Line((1, 1), (1, 2))
-      canvas withinCanvas (line) should be(true)
+      canvas withinCanvas line should be(true)
     }
   }
 

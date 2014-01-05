@@ -1,4 +1,4 @@
-package com.howzat.draw
+package com.howzat
 
 import com.howzat.draw.commands._
 import com.howzat.io.{InputValidation, InputParser}

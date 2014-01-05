@@ -1,14 +1,7 @@
 package com.howzat.draw.commands
 
-
-
 import com.howzat.io.InputValidation
 import com.howzat._
-import com.howzat.draw.commands.ApplyFill
-import com.howzat.draw.commands.NewCanvas
-import com.howzat.draw.commands.Quit
-import com.howzat.draw.commands.DrawLine
-import com.howzat.draw.commands.DrawRectangle
 
 class CommandValidation(inputValidation: InputValidation) {
 

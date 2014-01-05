@@ -58,7 +58,7 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
 
       val opt = session newCanvas(20, 4)
       opt.isRight should be(true)
-      val canvas = printer printCanvas (opt.right.get)
+      val canvas = printer printCanvas opt.right.get
       canvas should be(output)
     }
 
@@ -73,7 +73,7 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
 
       val opt = session drawLine((1, 2), (6, 2))
       opt.isRight should be(true)
-      val canvas = printer printCanvas (opt.right.get)
+      val canvas = printer printCanvas opt.right.get
       canvas should be(output)
     }
 
@@ -89,7 +89,7 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
 
       val opt = session drawLine((6, 3), (6, 4))
       opt.isRight should be(true)
-      val canvas = printer printCanvas (opt.right.get)
+      val canvas = printer printCanvas opt.right.get
       canvas should be(output)
     }
 
@@ -104,7 +104,7 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
 
       val opt = session drawRectangle((16, 1), (20, 3))
       opt.isRight should be(true)
-      val canvas = printer printCanvas (opt.right.get)
+      val canvas = printer printCanvas opt.right.get
       canvas should be(output)
     }
 
@@ -120,7 +120,7 @@ class DrawingSessionTest extends FreeSpec with ShouldMatchers {
 
       val opt = session fill((10,3),"o")
       opt.isRight should be(true)
-      val canvas = printer printCanvas (opt.right.get)
+      val canvas = printer printCanvas opt.right.get
       canvas should be(output)
     }
   }

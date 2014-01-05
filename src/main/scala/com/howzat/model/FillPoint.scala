@@ -11,9 +11,9 @@ object FillPoint {
     var found: List[Position] = List.empty
 
     def available(position: Position) {
-      if(canvas.withinCanvas(position) && !(searched contains (position))) {
+      if(canvas.withinCanvas(position) && !(searched contains position)) {
         searched = position +: searched
-        canvas.elementMap get (position) map {
+        canvas.elementMap get position map {
           e =>
             if(e.isInstanceOf[Empty]) {
               found = position +: found

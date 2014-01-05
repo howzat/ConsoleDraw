@@ -24,7 +24,7 @@ class ElementPrinterTest extends FreeSpec with ShouldMatchers  {
           ^|oooo|
           ^------""".stripMargin('^')
 
-      val s: String = printer printCanvas (Canvas(4, 4, Nil))
+      val s: String = printer printCanvas Canvas(4, 4, Nil)
       s should be (output)
     }
   }

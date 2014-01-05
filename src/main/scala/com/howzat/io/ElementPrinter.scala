@@ -17,7 +17,7 @@ case class ElementPrinter(emptyChar:String="o") {
       if(canvas.isRightEdge(element.bottomRight)) render(element) + "\n"
       else render(element)
     }
-    (rowStrings mkString("")) .dropRight(1)
+    (rowStrings mkString "") .dropRight(1)
   }
 
   def render(element: Element): String = {

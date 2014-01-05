@@ -10,7 +10,7 @@ class InputValidation {
   }
 
   def collectErrors[T](results: Seq[Either[String, T]]): String = {
-    results filter (_.isLeft) map (_.left.get) mkString (", ")
+    results filter (_.isLeft) map (_.left.get) mkString ", "
   }
 
   def greaterThanZero(value:Int, param:String) : Either[String, Int] = {

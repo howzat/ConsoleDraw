@@ -27,7 +27,7 @@ class InputParserTest extends FreeSpec with ShouldMatchers {
   "Parser matches 'C' for new Canvas " - {
 
     "with a positive width and height" in {
-      parser parse ("C 10 10") should be(Some(Right(NewCanvas(10, 10))))
+      parser parse "C 10 10" should be(Some(Right(NewCanvas(10, 10))))
     }
 
     "will not match negative values" in {

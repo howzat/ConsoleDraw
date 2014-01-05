@@ -18,10 +18,10 @@ class DrawingSession {
   }
 
   private def draw(elements: List[Element], canvas:Canvas): CanvasEither = {
-    canvas withinCanvas(elements) match {
+    canvas withinCanvas elements match {
       case er@Left(error) => er
       case Right(_) => {
-        val newState = canvas update (elements)
+        val newState = canvas update elements
         canvasState = Some(newState)
         Right(newState)
       }
